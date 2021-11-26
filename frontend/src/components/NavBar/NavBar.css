@@ -1,0 +1,120 @@
+.NavBar {
+  border: 2px solid red;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 50px;
+}
+
+.NavBar .menu {
+  border: 1px solid red;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1em;
+  margin-left: 2.5%;
+}
+
+.NavBar .menu a,
+.NavBar .menu .NavLinks {
+  height: 100%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+}
+
+.NavBar .menu a:hover > div,
+.NavBar .menu .NavLinks:hover > div {
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
+.NavBar .menu a div,
+.NavBar .menu .NavLinks div {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1em;
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border: 2px solid red;
+}
+
+.NavBar .login {
+  margin-right: 2.5%;
+  height: 100%;
+}
+
+.NavBar .login img.google {
+  height: 100%;
+  width: auto;
+  cursor: pointer;
+}
+
+.NavBar .login .user {
+  border: 1px solid green;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+}
+
+.NavBar .login .user img {
+  height: 100%;
+  width: auto;
+}
+
+.NavBar .login .user .logout {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+}
+
+.NavBar .login .user .logout svg {
+  height: 100%;
+}
+
+.NavBar .login .user .logout svg:hover {
+  fill: red;
+  cursor: pointer;
+}
