@@ -23,6 +23,21 @@
     height: 100%;
     display: flex;
 
+    svg {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      right: 0;
+      fill: red;
+      width: auto;
+      height: 1.5em;
+      margin: -0.75em;
+      @media screen and (min-width: 1000px) {
+        height: 2em;
+        margin: -1em;
+      }
+    }
+
     .left,
     .right {
       width: 50%;

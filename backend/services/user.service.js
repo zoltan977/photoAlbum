@@ -5,8 +5,9 @@ const httpClient = require("axios");
 const settings = require("../settings");
 const uuid = require("uuid");
 const uploadPath = settings.PROJECT_DIR + "/public/photos/";
+const fs = require("fs");
 
-exports.titleChange = async (postedData, user) => {
+exports.deletePhoto = async (postedData, user) => {
   const currentUser = await User.findOne({ email: user.email });
   console.log("currentUser:", currentUser);
   console.log("posted data:", postedData);
@@ -23,6 +24,34 @@ exports.titleChange = async (postedData, user) => {
 
   if (!photo) throw { status: 400, msg: "Nincs ilyen fotó!" };
 
+  try {
+    const index = await album.photos.findIndex(
+      (p) => p.path === postedData.path
+    );
+    album.photos.splice(index, 1);
+    await currentUser.save();
+
+    fs.unlinkSync(uploadPath + photo.path);
+  } catch (error) {
+    throw { status: 400, msg: "Fájl törlési hiba!" };
+  }
+
+  return { success: true };
+};
+
+exports.titleChange = async (postedData, user) => {
+  const currentUser = await User.findOne({ email: user.email });
+
+  const album = await currentUser?.albums?.find(
+    (a) => a.title === postedData.albumTitle
+  );
+
+  if (!album) throw { status: 400, msg: "Nincs ilyen album!" };
+
+  const photo = await album?.photos?.find((p) => p.path === postedData.path);
+
+  if (!photo) throw { status: 400, msg: "Nincs ilyen fotó!" };
+
   photo.title = postedData.newTitle;
 
   try {
@@ -36,7 +65,6 @@ exports.titleChange = async (postedData, user) => {
 
 exports.albums = async (postedData, user) => {
   const currentUser = await User.findOne({ email: user.email });
-  console.log("currentUser:", currentUser);
 
   const albums = currentUser?.albums;
 
@@ -44,9 +72,6 @@ exports.albums = async (postedData, user) => {
 };
 
 exports.upload = async (postedData, user, files) => {
-  console.log("files:", files.photo);
-  console.log("postedData:", postedData);
-
   if (!files.photo.length) files.photo = [files.photo];
 
   const photos = files.photo.map((f) => {
@@ -68,12 +93,10 @@ exports.upload = async (postedData, user, files) => {
   });
 
   const userToUpdate = await User.findOne({ email: user.email });
-  console.log("userToUpdate:", userToUpdate);
 
   const album = await userToUpdate?.albums?.find(
     (a) => a.title === postedData.title
   );
-  console.log("album:", album);
 
   if (album) album.photos.push(...photos);
   else {
