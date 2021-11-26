@@ -14,6 +14,7 @@ export default function AlbumCard({ title, date, photos }) {
           selectedPhoto,
           setSelectedPhoto,
           photos,
+          albumTitle: title,
         }}
       >
         {selectedPhoto && <PhotoDetails />}

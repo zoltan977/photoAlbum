@@ -12,6 +12,7 @@ const PhotoSchema = mongoose.Schema({
   path: {
     type: String,
     required: true,
+    unique: true,
   },
   size: {
     type: Number,

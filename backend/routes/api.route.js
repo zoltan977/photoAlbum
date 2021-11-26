@@ -12,6 +12,8 @@ router.post(
 
 router.post("/upload_photo", [auth], UserController.userAccount("upload"));
 
+router.post("/title_change", [auth], UserController.userAccount("titleChange"));
+
 router.get("/albums", [auth], UserController.userAccount("albums"));
 
 router.get("/loaduser", [auth], UserController.loadUser);
