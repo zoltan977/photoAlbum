@@ -1,9 +1,15 @@
 import "./PhotoCard.css";
-import React from "react";
+import React, { useContext } from "react";
+import AlbumCardContext from "../AlbumCardContext/AlbumCardContext";
 
-export default function PhotoCard({ title, date, path }) {
+export default function PhotoCard({ title, date, path, size }) {
+  const { setSelectedPhoto } = useContext(AlbumCardContext);
+
   return (
-    <div className="PhotoCard">
+    <div
+      className="PhotoCard"
+      onClick={(e) => setSelectedPhoto({ title, path, date, size })}
+    >
       <div className="overlay">
         <div className="left">
           <div className="info">
