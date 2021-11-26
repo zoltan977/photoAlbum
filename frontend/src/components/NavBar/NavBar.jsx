@@ -18,7 +18,7 @@ const NavBar = ({ logout, user, isAuthenticated }) => {
           Album
           <div>
             <NavLink to="/new-album">Új Album</NavLink>
-            <NavLink to="/">Albumok</NavLink>
+            <NavLink to="/albums">Albumok</NavLink>
           </div>
         </div>
       </div>

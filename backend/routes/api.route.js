@@ -12,6 +12,8 @@ router.post(
 
 router.post("/upload_photo", [auth], UserController.userAccount("upload"));
 
+router.get("/albums", [auth], UserController.userAccount("albums"));
+
 router.get("/loaduser", [auth], UserController.loadUser);
 
 module.exports = router;

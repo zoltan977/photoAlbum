@@ -16,6 +16,7 @@ import { loadUser } from "./actions/authActions";
 
 import { useLocation } from "react-router-dom";
 import NewAlbum from "./components/NewAlbum/NewAlbum";
+import Albums from "./components/Albums/Albums";
 
 const App = ({ loading, loadUser }) => {
   const location = useLocation();
@@ -30,14 +31,16 @@ const App = ({ loading, loadUser }) => {
     <div
       className="App"
       style={{
-        backgroundImage: 'url("background.svg")',
+        backgroundImage: 'url("background.jpg")',
         backgroundSize: "contain",
+        backgroundPositionX: "center",
       }}
     >
       <NavBar />
       <Switch>
         <Route path="/callback" component={Callback} />
         <PrivateRoute path="/new-album" component={NewAlbum} />
+        <PrivateRoute path="/albums" component={Albums} />
         <Route exact path="/">
           {loading ? <LoadingMask /> : <Home />}
         </Route>

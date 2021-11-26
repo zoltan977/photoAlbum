@@ -1,0 +1,30 @@
+.AlbumCard {
+  border: 20px solid red;
+}
+
+.AlbumCard .info {
+  text-align: center;
+  font-size: 20px;
+}
+
+@media screen and (min-width: 1000px) {
+  .AlbumCard .info {
+    font-size: 40px;
+  }
+}
+
+.AlbumCard .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  gap: 2%;
+  padding: 2% 2% 0 2%;
+}
