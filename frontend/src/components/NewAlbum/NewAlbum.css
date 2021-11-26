@@ -1,0 +1,41 @@
+.NewAlbum {
+  padding-top: 100px;
+  min-height: 100vh;
+  border: 2px solid red;
+}
+
+.NewAlbum form {
+  border: 2px solid red;
+  margin: 0 auto;
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  font-family: "Teko", sans-serif;
+  font-size: 4vw;
+}
+
+@media screen and (min-width: 751px) {
+  .NewAlbum form {
+    font-size: 2vw;
+  }
+}
+
+.NewAlbum form [name="title"],
+.NewAlbum form button {
+  text-align: center;
+  font-family: "Teko", sans-serif;
+  font-size: 4vw;
+}
+
+@media screen and (min-width: 751px) {
+  .NewAlbum form [name="title"],
+  .NewAlbum form button {
+    font-size: 2vw;
+  }
+}

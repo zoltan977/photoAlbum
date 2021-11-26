@@ -1,0 +1,176 @@
+.NavBar {
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+  background-color: rgba(128, 128, 128, 0.8);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 50px;
+}
+
+.NavBar .menu {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1em;
+  margin-left: 2.5%;
+}
+
+.NavBar .menu a:hover {
+  background-color: black;
+  color: white;
+}
+
+.NavBar .menu a,
+.NavBar .menu .NavLinks {
+  height: 100%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.NavBar .menu a:hover,
+.NavBar .menu .NavLinks:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.NavBar .menu a:hover > div,
+.NavBar .menu .NavLinks:hover > div {
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
+.NavBar .menu a div,
+.NavBar .menu .NavLinks div {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0.5em;
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  padding: 0.25em;
+  background-color: rgba(128, 128, 128, 0.8);
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+}
+
+.NavBar .menu a div a,
+.NavBar .menu .NavLinks div a {
+  font-size: 0.8em;
+}
+
+.NavBar .login {
+  margin-right: 2.5%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.NavBar .login img.google {
+  height: 40%;
+  width: auto;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 500px) {
+  .NavBar .login img.google {
+    height: 80%;
+  }
+}
+
+.NavBar .login .user {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.5em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  font-family: "Teko", sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.NavBar .login .user span {
+  display: none;
+}
+
+@media screen and (min-width: 500px) {
+  .NavBar .login .user span {
+    display: inline;
+  }
+}
+
+.NavBar .login .user img {
+  height: 100%;
+  width: auto;
+  display: none;
+}
+
+@media screen and (min-width: 500px) {
+  .NavBar .login .user img {
+    display: block;
+  }
+}
+
+.NavBar .login .user .logout {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+}
+
+.NavBar .login .user .logout svg {
+  height: 100%;
+}
+
+.NavBar .login .user .logout svg:hover {
+  fill: red;
+  cursor: pointer;
+}

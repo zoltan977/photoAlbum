@@ -1,0 +1,139 @@
+.NavBar {
+  box-shadow: 5px 10px 10px rgba($color: #000000, $alpha: 1);
+  background-color: rgba($color: gray, $alpha: 0.8);
+
+  display: flex;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  width: 100%;
+  height: 50px;
+
+  .menu {
+    // border: 1px solid red;
+    display: inline-flex;
+    align-items: center;
+    gap: 1em;
+
+    margin-left: 2.5%;
+
+    a:hover {
+      background-color: black;
+      color: white;
+    }
+
+    a,
+    .NavLinks {
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      text-decoration: none;
+      color: black;
+      white-space: nowrap;
+
+      font-family: "Open Sans Condensed", sans-serif;
+      font-weight: bold;
+      font-size: 30px;
+      line-height: 1;
+
+      &:hover {
+        background-color: black;
+        color: white;
+
+        cursor: pointer;
+      }
+
+      &:hover > div {
+        transform: scaleY(1);
+      }
+
+      div {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: 0.5s;
+        padding: 0.25em;
+
+        background-color: rgba($color: gray, $alpha: 0.8);
+        box-shadow: 5px 10px 10px rgba($color: #000000, $alpha: 1);
+
+        a {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+
+  .login {
+    margin-right: 2.5%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    img.google {
+      height: 40%;
+      width: auto;
+      cursor: pointer;
+
+      @media screen and (min-width: 500px) {
+        height: 80%;
+      }
+    }
+
+    .user {
+      // border: 1px solid green;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      width: fit-content;
+      height: 100%;
+
+      font-family: "Teko", sans-serif;
+      font-weight: bold;
+      font-size: 30px;
+
+      span {
+        display: none;
+
+        @media screen and (min-width: 500px) {
+          display: inline;
+        }
+      }
+
+      img {
+        height: 100%;
+        width: auto;
+
+        display: none;
+        @media screen and (min-width: 500px) {
+          display: block;
+        }
+      }
+
+      .logout {
+        display: inline-flex;
+        width: fit-content;
+        height: 100%;
+
+        svg {
+          height: 100%;
+
+          &:hover {
+            fill: red;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

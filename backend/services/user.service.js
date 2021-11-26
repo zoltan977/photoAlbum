@@ -6,6 +6,15 @@ const settings = require("../settings");
 const uuid = require("uuid");
 const uploadPath = settings.PROJECT_DIR + "/public/photos/";
 
+exports.albums = async (postedData, user) => {
+  const currentUser = await User.findOne({ email: user.email });
+  console.log("currentUser:", currentUser);
+
+  const albums = currentUser?.albums;
+
+  return albums ? albums : [];
+};
+
 exports.upload = async (postedData, user, files) => {
   console.log("files:", files.photo);
   console.log("postedData:", postedData);

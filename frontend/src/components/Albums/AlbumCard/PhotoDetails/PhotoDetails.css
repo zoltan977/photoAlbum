@@ -1,0 +1,62 @@
+.PhotoDetails {
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128, 128, 128, 0.8);
+}
+
+.PhotoDetails .image {
+  height: 100%;
+  width: 80%;
+}
+
+.PhotoDetails .image.hide {
+  visibility: hidden;
+}
+
+.PhotoDetails .image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
+.PhotoDetails button {
+  font-size: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoDetails button {
+    font-size: 100px;
+  }
+}
+
+.PhotoDetails button.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+  color: red;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoDetails button.close {
+    font-size: 50px;
+  }
+}

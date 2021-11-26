@@ -1,0 +1,103 @@
+.PhotoCard {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 100px;
+  margin-bottom: 4%;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard {
+    max-width: 200px;
+    margin-bottom: 2%;
+  }
+}
+
+.PhotoCard img {
+  width: 100%;
+}
+
+.PhotoCard div.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.PhotoCard div.overlay .left,
+.PhotoCard div.overlay .right {
+  width: 50%;
+}
+
+.PhotoCard div.overlay .right:hover > div.info {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: scaleX(1) translateY(-50%);
+  transform: scaleX(1) translateY(-50%);
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+}
+
+.PhotoCard div.overlay .left:hover > div.info {
+  right: 50%;
+  top: 50%;
+  -webkit-transform: scaleX(1) translateY(-50%);
+  transform: scaleX(1) translateY(-50%);
+  -webkit-transform-origin: right;
+  transform-origin: right;
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+}
+
+.PhotoCard div.overlay div.info {
+  z-index: 2;
+  position: absolute;
+  -webkit-transform: scaleX(0) translateY(-50%);
+  transform: scaleX(0) translateY(-50%);
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+  background-color: rgba(128, 128, 128, 0.8);
+  padding: 0;
+  width: 110px;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard div.overlay div.info {
+    width: 220px;
+  }
+}
+
+.PhotoCard div.overlay div.info p.title {
+  font-family: "Anton", sans-serif;
+}
+
+.PhotoCard div.overlay div.info p.title,
+.PhotoCard div.overlay div.info p.date {
+  word-break: break-all;
+  font-size: 10px;
+  padding: 5px;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard div.overlay div.info p.title,
+  .PhotoCard div.overlay div.info p.date {
+    font-size: 20px;
+    padding: 10px;
+  }
+}
