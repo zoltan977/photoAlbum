@@ -1,13 +1,15 @@
 .PhotoCard {
   position: relative;
-  border: 2px solid red;
   max-width: 100px;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
 }
 
 @media screen and (min-width: 1000px) {
   .PhotoCard {
     max-width: 200px;
+    margin-bottom: 2%;
   }
 }
 
@@ -58,29 +60,38 @@
 }
 
 .PhotoCard div.overlay div.info {
+  z-index: 2;
   position: absolute;
   -webkit-transform: scaleX(0) translateY(-50%);
   transform: scaleX(0) translateY(-50%);
-  z-index: 2;
-  width: 100px;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+  background-color: rgba(128, 128, 128, 0.8);
+  padding: 0;
+  width: 110px;
 }
 
 @media screen and (min-width: 1000px) {
   .PhotoCard div.overlay div.info {
-    width: 200px;
+    width: 220px;
   }
+}
+
+.PhotoCard div.overlay div.info p.title {
+  font-family: "Anton", sans-serif;
 }
 
 .PhotoCard div.overlay div.info p.title,
 .PhotoCard div.overlay div.info p.date {
   word-break: break-all;
-  border: 2px solid red;
   font-size: 10px;
+  padding: 5px;
 }
 
 @media screen and (min-width: 1000px) {
   .PhotoCard div.overlay div.info p.title,
   .PhotoCard div.overlay div.info p.date {
     font-size: 20px;
+    padding: 10px;
   }
 }

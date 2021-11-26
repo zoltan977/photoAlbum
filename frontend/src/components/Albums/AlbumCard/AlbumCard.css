@@ -1,16 +1,32 @@
 .AlbumCard {
-  border: 20px solid red;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
+  background-color: rgba(128, 128, 128, 0.5);
+  margin: 20px;
 }
 
 .AlbumCard .info {
   text-align: center;
   font-size: 20px;
+  padding: 1em 0;
 }
 
 @media screen and (min-width: 1000px) {
   .AlbumCard .info {
     font-size: 40px;
+    padding: 2em 0;
   }
+}
+
+.AlbumCard .info h2 {
+  font-family: "Anton", sans-serif;
+  line-height: 1;
+}
+
+.AlbumCard .info p.date {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .AlbumCard .content {
@@ -25,6 +41,13 @@
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
-  gap: 2%;
-  padding: 2% 2% 0 2%;
+  gap: 4%;
+  padding: 0 4% 0 4%;
+}
+
+@media screen and (min-width: 1000px) {
+  .AlbumCard .content {
+    gap: 2%;
+    padding: 0 2% 0 2%;
+  }
 }

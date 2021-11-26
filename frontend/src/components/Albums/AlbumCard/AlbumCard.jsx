@@ -6,8 +6,8 @@ export default function AlbumCard({ title, date, photos }) {
   return (
     <div className="AlbumCard">
       <div className="info">
-        <p className="title">{title}</p>
-        <p className="date">{new Date(date).toLocaleString()}</p>
+        <h2 className="title">{title}</h2>
+        <p className="date">{new Date(date).toLocaleDateString()}</p>
       </div>
       <div className="content">
         {photos.map((p, i) => (
