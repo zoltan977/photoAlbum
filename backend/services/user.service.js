@@ -2,152 +2,15 @@ const User = require("../models/User");
 const createToken = require("../utils/createToken");
 const jwt = require("jsonwebtoken");
 const httpClient = require("axios");
-const settings = require("../settings");
-const uuid = require("uuid");
-const uploadPath = settings.PROJECT_DIR + "/public/photos/";
-const fs = require("fs");
 
-exports.deleteAlbum = async (postedData, user) => {
-  const currentUser = await User.findOne({ email: user.email });
-  console.log("posted data:", postedData);
+exports.loadUser = async (params, postedData, currentUser) => {
+  const user = await User.findOne({ email: currentUser.email });
 
-  const albums = await currentUser?.albums;
-  if (!albums) throw { status: 400, msg: "Nincsenek albumok!" };
-
-  const albumIndex = await currentUser?.albums?.findIndex(
-    (a) => a.title === postedData.title
-  );
-
-  if (albumIndex === -1) throw { status: 400, msg: "Nincs ilyen album!" };
-
-  const album = currentUser.albums[albumIndex];
-
-  console.log(album);
-  try {
-    currentUser.albums.splice(albumIndex, 1);
-    await currentUser.save();
-
-    for (const photo of album.photos) {
-      fs.unlinkSync(uploadPath + photo.path);
-    }
-  } catch (error) {
-    console.log(error);
-    throw { status: 400, msg: "Fájl törlési hiba!" };
-  }
-
-  return { success: true };
+  if (!user) throw { status: 400, msg: "Nincs ilyen felhasználó" };
+  else return { name: user.name, photo: user.photo, email: user.email };
 };
 
-exports.deletePhoto = async (postedData, user) => {
-  const currentUser = await User.findOne({ email: user.email });
-  console.log("currentUser:", currentUser);
-  console.log("posted data:", postedData);
-
-  const album = await currentUser?.albums?.find(
-    (a) => a.title === postedData.albumTitle
-  );
-  console.log("album:", album);
-
-  if (!album) throw { status: 400, msg: "Nincs ilyen album!" };
-
-  const photo = await album?.photos?.find((p) => p.path === postedData.path);
-  console.log("photo:", photo);
-
-  if (!photo) throw { status: 400, msg: "Nincs ilyen fotó!" };
-
-  try {
-    const index = await album.photos.findIndex(
-      (p) => p.path === postedData.path
-    );
-    album.photos.splice(index, 1);
-    await currentUser.save();
-
-    fs.unlinkSync(uploadPath + photo.path);
-  } catch (error) {
-    throw { status: 400, msg: "Fájl törlési hiba!" };
-  }
-
-  return { success: true };
-};
-
-exports.titleChange = async (postedData, user) => {
-  const currentUser = await User.findOne({ email: user.email });
-
-  const album = await currentUser?.albums?.find(
-    (a) => a.title === postedData.albumTitle
-  );
-
-  if (!album) throw { status: 400, msg: "Nincs ilyen album!" };
-
-  const photo = await album?.photos?.find((p) => p.path === postedData.path);
-
-  if (!photo) throw { status: 400, msg: "Nincs ilyen fotó!" };
-
-  photo.title = postedData.newTitle;
-
-  try {
-    await currentUser.save();
-  } catch (error) {
-    throw { status: 400, msg: "Hiba a mentéskor!" };
-  }
-
-  return { success: true };
-};
-
-exports.albums = async (postedData, user) => {
-  const currentUser = await User.findOne({ email: user.email });
-
-  const albums = currentUser?.albums;
-
-  return albums ? albums : [];
-};
-
-exports.upload = async (postedData, user, files) => {
-  if (!files.photo.length) files.photo = [files.photo];
-
-  const photos = files.photo.map((f) => {
-    const uuidv4 = uuid.v4();
-    const path = uploadPath + uuidv4;
-
-    try {
-      f.mv(path);
-    } catch (error) {
-      throw { msg: "Image saving error", status: 400 };
-    }
-
-    return {
-      title: f.name,
-      path: uuidv4,
-      size: f.size,
-      date: new Date(),
-    };
-  });
-
-  const userToUpdate = await User.findOne({ email: user.email });
-
-  const album = await userToUpdate?.albums?.find(
-    (a) => a.title === postedData.title
-  );
-
-  if (album) album.photos.push(...photos);
-  else {
-    const newAlbum = {
-      title: postedData.title,
-      date: new Date(),
-      photos: photos,
-    };
-
-    userToUpdate.albums
-      ? userToUpdate.albums.push(newAlbum)
-      : (userToUpdate.albums = [newAlbum]);
-  }
-
-  await userToUpdate.save();
-
-  return { success: true };
-};
-
-exports.google = async (postedData) => {
+exports.google = async (params, postedData) => {
   const { code } = postedData;
 
   let response;

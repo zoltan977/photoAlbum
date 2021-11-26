@@ -9,6 +9,9 @@ const PhotoSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  categories: {
+    type: [String],
+  },
   path: {
     type: String,
     required: true,

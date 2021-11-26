@@ -39,7 +39,7 @@ const NewAlbum = ({ logout }) => {
     }
 
     try {
-      const response = await httpClient.post("/api/upload_photo", formData, {
+      const response = await httpClient.post("/api/photo", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

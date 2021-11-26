@@ -10,13 +10,11 @@ import httpClient from "axios";
 
 const AlbumCard = ({ title, date, photos, logout }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const { getAlbums } = useContext(AlbumContext);
+  const { getAlbums, selectedCategory } = useContext(AlbumContext);
 
   const sendDeleteAlbumRequest = async () => {
     try {
-      await httpClient.post(`/api/delete_album`, {
-        title,
-      });
+      await httpClient.delete(`/api/album/${title}`);
 
       console.log("Album is deleted");
       getAlbums();
@@ -54,15 +52,29 @@ const AlbumCard = ({ title, date, photos, logout }) => {
           <p className="date">{new Date(date).toLocaleDateString()}</p>
         </div>
         <div className="content">
-          {photos.map((p, i) => (
-            <PhotoCard
-              key={i}
-              title={p.title}
-              date={p.date}
-              path={p.path}
-              size={p.size}
-            />
-          ))}
+          {(function () {
+            const filtered = photos
+              .filter(
+                (p) =>
+                  p.categories.includes(selectedCategory) || !selectedCategory
+              )
+              .map((p, i) => (
+                <PhotoCard
+                  key={i}
+                  title={p.title}
+                  date={p.date}
+                  path={p.path}
+                  size={p.size}
+                  photoCategories={p.categories}
+                />
+              ));
+
+            return filtered.length ? (
+              filtered
+            ) : (
+              <p>Nincs kép a választott kategóriában!</p>
+            );
+          })()}
         </div>
       </AlbumCardContext.Provider>
     </div>

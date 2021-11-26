@@ -101,6 +101,37 @@
   }
 }
 
+.PhotoCard div.overlay div.info div.select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.PhotoCard div.overlay div.info div.select label,
+.PhotoCard div.overlay div.info div.select select {
+  text-align: center;
+  font-size: 10px;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard div.overlay div.info div.select label,
+  .PhotoCard div.overlay div.info div.select select {
+    font-size: 20px;
+  }
+}
+
+.PhotoCard div.overlay div.info div.categories img {
+  height: 1em;
+  width: auto;
+}
+
 .PhotoCard div.overlay div.info p.title {
   font-family: "Anton", sans-serif;
 }

@@ -71,6 +71,28 @@
         width: 220px;
       }
 
+      div.select {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        label,
+        select {
+          text-align: center;
+          font-size: 10px;
+          @media screen and (min-width: 1000px) {
+            font-size: 20px;
+          }
+        }
+      }
+
+      div.categories {
+        img {
+          height: 1em;
+          width: auto;
+        }
+      }
+
       p.title {
         font-family: "Anton", sans-serif;
       }
