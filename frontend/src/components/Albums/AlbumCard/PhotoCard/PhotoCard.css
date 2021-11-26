@@ -127,13 +127,21 @@
   }
 }
 
-.PhotoCard div.overlay div.info div.categories img {
+.PhotoCard div.overlay div.info img.show {
   height: 1em;
   width: auto;
+  cursor: pointer;
+}
+
+.PhotoCard div.overlay div.info .imageCategories img {
+  height: 1em;
+  width: auto;
+  cursor: pointer;
 }
 
 .PhotoCard div.overlay div.info p.title {
   font-family: "Anton", sans-serif;
+  cursor: pointer;
 }
 
 .PhotoCard div.overlay div.info p.title,

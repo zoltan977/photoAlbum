@@ -1,0 +1,11 @@
+.AutoSearch {
+  border: 2px solid red;
+}
+
+.AutoSearch p {
+  cursor: pointer;
+}
+
+.AutoSearch p:hover {
+  background-color: white;
+}

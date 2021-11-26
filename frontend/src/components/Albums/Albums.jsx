@@ -2,40 +2,23 @@ import "./Albums.css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { logout } from "./../../actions/authActions";
-import httpClient from "axios";
 import AlbumCard from "./AlbumCard/AlbumCard";
 import AlbumContext from "./AlbumContext/AlbumContext";
+import getApiData from "../../utils/getApiData";
 
 const Albums = ({ logout }) => {
   const [albums, setAlbums] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const getAlbums = async () => {
-    try {
-      const response = await httpClient.get("/api/album/albums");
+  const getData = getApiData(logout);
 
-      setAlbums(response.data);
-    } catch (error) {
-      console.log(error);
-
-      if (error?.response?.data?.msg?.includes("Authentication error"))
-        logout();
-    }
+  const getAlbums = () => {
+    getData("/api/album/albums", setAlbums);
   };
 
-  const getCategories = async () => {
-    try {
-      const response = await httpClient.get("/api/photo/categories");
-      console.log(response);
-
-      setCategories(response.data);
-    } catch (error) {
-      console.log(error);
-
-      if (error?.response?.data?.msg?.includes("Authentication error"))
-        logout();
-    }
+  const getCategories = () => {
+    getData("/api/photo/categories", setCategories);
   };
 
   useEffect(() => {
@@ -46,16 +29,19 @@ const Albums = ({ logout }) => {
   return (
     <div className="Albums">
       <h1>Albumok</h1>
-      <select onChange={(e) => setSelectedCategory(e.target.value)}>
-        <option key={0} value="">
-          none
-        </option>
-        {categories.map((c, i) => (
-          <option key={i + 1} value={c.title}>
-            {c.title}
+      <div className="categories">
+        Kategóriák:
+        <select onChange={(e) => setSelectedCategory(e.target.value)}>
+          <option key={0} value="">
+            none
           </option>
-        ))}
-      </select>
+          {categories.map((c, i) => (
+            <option key={i + 1} value={c.title}>
+              {c.title}
+            </option>
+          ))}
+        </select>
+      </div>
       <AlbumContext.Provider
         value={{
           getAlbums,

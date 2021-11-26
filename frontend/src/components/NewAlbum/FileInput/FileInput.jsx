@@ -10,7 +10,7 @@ export default function FileInput({ change }) {
   const checkFileInputEmpty = () => {
     if (!inpRef.current.files[0]) {
       setError("Nincs kiválasztva kép!");
-      inpRef.current.parentElement.style.backgroundColor = "red";
+      inpRef.current.parentElement.style.border = "2px solid red";
     } else {
       setError("");
       inpRef.current.parentElement.style = "";
@@ -34,7 +34,7 @@ export default function FileInput({ change }) {
     }
     if (!valid) {
       setError("Valamelyik kép mérete vagy típusa nem megfelelő!");
-      inpRef.current.parentElement.style.backgroundColor = "red";
+      inpRef.current.parentElement.style.border = "2px solid red";
       inpRef.current.value = "";
       change(e);
     } else {

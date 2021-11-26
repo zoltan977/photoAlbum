@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
 
-const photoController = (serviceName, methodName) =>
+const Controller = (serviceName, methodName) =>
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
@@ -23,4 +23,4 @@ const photoController = (serviceName, methodName) =>
     return res.json(result);
   });
 
-module.exports = photoController;
+module.exports = Controller;

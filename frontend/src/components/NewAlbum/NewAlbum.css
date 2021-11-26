@@ -50,6 +50,8 @@
   background-color: rgba(128, 128, 128, 0.8);
   padding: 1em;
   border-radius: 1em;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
   margin: 0 auto;
   width: 70%;
   display: -webkit-box;
@@ -64,6 +66,7 @@
 
 .NewAlbum form [name="title"],
 .NewAlbum form button {
+  width: 100%;
   text-align: center;
   font-family: "Teko", sans-serif;
   font-size: 4vw;
@@ -78,5 +81,5 @@
 
 .NewAlbum form [name="title"]:invalid,
 .NewAlbum form button:invalid {
-  background-color: red;
+  border: 2px solid red;
 }

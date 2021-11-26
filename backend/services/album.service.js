@@ -3,6 +3,26 @@ const settings = require("../settings");
 const uploadPath = settings.PROJECT_DIR + "/public/photos/";
 const fs = require("fs");
 
+exports.titleChange = async (params, postedData, user) => {
+  const currentUser = await User.findOne({ email: user.email });
+
+  const album = await currentUser?.albums?.find(
+    (a) => a.title === postedData.title
+  );
+
+  if (!album) throw { status: 400, msg: "Nincs ilyen album!" };
+
+  album.title = postedData.newTitle;
+
+  try {
+    await currentUser.save();
+  } catch (error) {
+    throw { status: 400, msg: "Hiba a mentéskor!" };
+  }
+
+  return { success: true };
+};
+
 exports.deleteAlbum = async (params, postedData, user) => {
   const currentUser = await User.findOne({ email: user.email });
 

@@ -13,7 +13,12 @@ router.post(
 
 router.put(
   "/title",
-  [auth, check("title", "Nincs megadva cím!").exists()],
+  [
+    auth,
+    check("newTitle", "Nincs megadva új cím!").exists(),
+    check("albumTitle", "Nincs megadva album cím!").exists(),
+    check("path", "Nincs megadva kép cím!").exists(),
+  ],
   Controller("photo", "titleChange")
 );
 

@@ -3,6 +3,7 @@
   box-shadow: 5px 10px 10px rgba($color: #000000, $alpha: 1);
   background-color: rgba($color: grey, $alpha: 0.5);
   margin: 20px;
+  border-radius: 1em;
 
   svg {
     position: absolute;
@@ -31,12 +32,17 @@
     h2 {
       font-family: "Anton", sans-serif;
       line-height: 1;
+      cursor: pointer;
     }
 
     p.date {
       font-family: "Open Sans Condensed", sans-serif;
       font-weight: bold;
       line-height: 1;
+      font-size: 20px;
+      @media screen and (min-width: 1000px) {
+        font-size: 40px;
+      }
     }
   }
 
@@ -51,6 +57,17 @@
     @media screen and (min-width: 1000px) {
       gap: 2%;
       padding: 0 2% 0 2%;
+    }
+
+    p.warning {
+      color: red;
+      font-size: 1rem;
+      @media screen and (min-width: 1000px) {
+        font-size: 2rem;
+      }
+      padding: 1em;
+      margin: 1em;
+      background-color: black;
     }
   }
 }

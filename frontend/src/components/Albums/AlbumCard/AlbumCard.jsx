@@ -1,36 +1,43 @@
 import "./AlbumCard.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import PhotoCard from "./PhotoCard/PhotoCard";
 import PhotoDetails from "./PhotoDetails/PhotoDetails";
 import AlbumCardContext from "./AlbumCardContext/AlbumCardContext";
 import AlbumContext from "../AlbumContext/AlbumContext";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/authActions";
-import httpClient from "axios";
+import ContentEditable from "../../ContentEditable/ContentEditable";
+import sendQuery from "../../../utils/modifyApiData";
 
 const AlbumCard = ({ title, date, photos, logout }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [filteredPhotos, setFilteredPhotos] = useState(photos);
   const { getAlbums, selectedCategory } = useContext(AlbumContext);
 
-  const sendDeleteAlbumRequest = async () => {
-    try {
-      await httpClient.delete(`/api/album/${title}`);
-
-      console.log("Album is deleted");
-      getAlbums();
-    } catch (err) {
-      console.log(err?.response?.data);
-      if (
-        err?.response?.data?.msg &&
-        err.response.data.msg.includes("Authentication error")
-      )
-        logout();
-    }
-  };
+  const send = sendQuery(getAlbums, logout);
 
   const deleteAlbum = (e) => {
-    if (window.confirm("Törlöd az albumot ?")) sendDeleteAlbumRequest();
+    if (window.confirm("Törlöd az albumot ?"))
+      send("delete", `/api/album/${title}`);
   };
+
+  const currentTimeout = useRef();
+  const titleChange = (value) => {
+    clearTimeout(currentTimeout.current);
+
+    currentTimeout.current = setTimeout(() => {
+      send("put", "/api/album/title", { newTitle: value, title });
+      console.log("Title change");
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const filtered = photos.filter(
+      (p) => p.categories.includes(selectedCategory) || !selectedCategory
+    );
+
+    setFilteredPhotos(filtered);
+  }, [selectedCategory, photos]);
 
   return (
     <div className="AlbumCard">
@@ -38,7 +45,7 @@ const AlbumCard = ({ title, date, photos, logout }) => {
         value={{
           selectedPhoto,
           setSelectedPhoto,
-          photos,
+          filteredPhotos,
           albumTitle: title,
         }}
       >
@@ -48,33 +55,26 @@ const AlbumCard = ({ title, date, photos, logout }) => {
         </svg>
 
         <div className="info">
-          <h2 className="title">{title}</h2>
+          <ContentEditable onChange={titleChange}>
+            <h2 className="title">{title}</h2>
+          </ContentEditable>
           <p className="date">{new Date(date).toLocaleDateString()}</p>
         </div>
         <div className="content">
-          {(function () {
-            const filtered = photos
-              .filter(
-                (p) =>
-                  p.categories.includes(selectedCategory) || !selectedCategory
-              )
-              .map((p, i) => (
-                <PhotoCard
-                  key={i}
-                  title={p.title}
-                  date={p.date}
-                  path={p.path}
-                  size={p.size}
-                  photoCategories={p.categories}
-                />
-              ));
-
-            return filtered.length ? (
-              filtered
-            ) : (
-              <p>Nincs kép a választott kategóriában!</p>
-            );
-          })()}
+          {filteredPhotos.length ? (
+            filteredPhotos.map((p, i) => (
+              <PhotoCard
+                key={i}
+                title={p.title}
+                date={p.date}
+                path={p.path}
+                size={p.size}
+                photoCategories={p.categories}
+              />
+            ))
+          ) : (
+            <p className="warning">Nincs kép a választott kategóriában!</p>
+          )}
         </div>
       </AlbumCardContext.Provider>
     </div>
