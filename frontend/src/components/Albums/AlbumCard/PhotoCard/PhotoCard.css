@@ -1,5 +1,11 @@
 .PhotoCard {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   max-width: 100px;
   margin-bottom: 4%;
   -webkit-box-shadow: 5px 10px 10px black;
