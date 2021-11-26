@@ -2,70 +2,15 @@ const User = require("../models/User");
 const createToken = require("../utils/createToken");
 const jwt = require("jsonwebtoken");
 const httpClient = require("axios");
-const settings = require("../settings");
-const uuid = require("uuid");
-const uploadPath = settings.PROJECT_DIR + "/public/photos/";
 
-exports.albums = async (postedData, user) => {
-  const currentUser = await User.findOne({ email: user.email });
-  console.log("currentUser:", currentUser);
+exports.loadUser = async (params, postedData, currentUser) => {
+  const user = await User.findOne({ email: currentUser.email });
 
-  const albums = currentUser?.albums;
-
-  return albums ? albums : [];
+  if (!user) throw { status: 400, msg: "Nincs ilyen felhasználó" };
+  else return { name: user.name, photo: user.photo, email: user.email };
 };
 
-exports.upload = async (postedData, user, files) => {
-  console.log("files:", files.photo);
-  console.log("postedData:", postedData);
-
-  if (!files.photo.length) files.photo = [files.photo];
-
-  const photos = files.photo.map((f) => {
-    const uuidv4 = uuid.v4();
-    const path = uploadPath + uuidv4;
-
-    try {
-      f.mv(path);
-    } catch (error) {
-      throw { msg: "Image saving error", status: 400 };
-    }
-
-    return {
-      title: f.name,
-      path: uuidv4,
-      size: f.size,
-      date: new Date(),
-    };
-  });
-
-  const userToUpdate = await User.findOne({ email: user.email });
-  console.log("userToUpdate:", userToUpdate);
-
-  const album = await userToUpdate?.albums?.find(
-    (a) => a.title === postedData.title
-  );
-  console.log("album:", album);
-
-  if (album) album.photos.push(...photos);
-  else {
-    const newAlbum = {
-      title: postedData.title,
-      date: new Date(),
-      photos: photos,
-    };
-
-    userToUpdate.albums
-      ? userToUpdate.albums.push(newAlbum)
-      : (userToUpdate.albums = [newAlbum]);
-  }
-
-  await userToUpdate.save();
-
-  return { success: true };
-};
-
-exports.google = async (postedData) => {
+exports.google = async (params, postedData) => {
   const { code } = postedData;
 
   let response;

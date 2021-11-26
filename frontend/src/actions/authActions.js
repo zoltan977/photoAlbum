@@ -26,7 +26,7 @@ export const loadUser = () => async (dispatch) => {
   if (token) setAuthToken(token);
 
   try {
-    const res = await axios.get("/api/loaduser");
+    const res = await axios.get("/api/user/loaduser");
 
     dispatch({
       type: LOGIN_SUCCESS,

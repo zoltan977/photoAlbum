@@ -1,11 +1,57 @@
 .NewAlbum {
   padding-top: 100px;
+  margin: 0 auto;
   min-height: 100vh;
-  border: 2px solid red;
+  font-family: "Teko", sans-serif;
+  font-size: 4vw;
+}
+
+@media screen and (min-width: 751px) {
+  .NewAlbum {
+    font-size: 2vw;
+    width: 50%;
+  }
+}
+
+.NewAlbum h1,
+.NewAlbum div {
+  text-align: center;
+}
+
+.NewAlbum a {
+  text-decoration: none;
+  color: black;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.NewAlbum a:hover {
+  color: red;
+}
+
+.NewAlbum p {
+  text-align: center;
+}
+
+.NewAlbum p.error {
+  color: red;
+  font-weight: bold;
+}
+
+.NewAlbum p.info {
+  font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .NewAlbum form {
-  border: 2px solid red;
+  background-color: rgba(128, 128, 128, 0.8);
+  padding: 1em;
+  border-radius: 1em;
+  -webkit-box-shadow: 5px 10px 10px black;
+  box-shadow: 5px 10px 10px black;
   margin: 0 auto;
   width: 70%;
   display: -webkit-box;
@@ -16,18 +62,11 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  font-family: "Teko", sans-serif;
-  font-size: 4vw;
-}
-
-@media screen and (min-width: 751px) {
-  .NewAlbum form {
-    font-size: 2vw;
-  }
 }
 
 .NewAlbum form [name="title"],
 .NewAlbum form button {
+  width: 100%;
   text-align: center;
   font-family: "Teko", sans-serif;
   font-size: 4vw;
@@ -38,4 +77,9 @@
   .NewAlbum form button {
     font-size: 2vw;
   }
+}
+
+.NewAlbum form [name="title"]:invalid,
+.NewAlbum form button:invalid {
+  border: 2px solid red;
 }

@@ -28,7 +28,7 @@ const Callback = ({ setToken, logout }) => {
             "Content-Type": "application/json",
           },
         };
-        const res = await httpClient.post("/api/google", { code }, config);
+        const res = await httpClient.post("/api/user/google", { code }, config);
 
         console.log("google callback /api/google res.data:", res.data);
 

@@ -4,6 +4,25 @@
   box-shadow: 5px 10px 10px black;
   background-color: rgba(128, 128, 128, 0.5);
   margin: 20px;
+  border-radius: 1em;
+}
+
+.AlbumCard svg {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  fill: red;
+  width: auto;
+  height: 1.5em;
+  margin: -0.75em;
+}
+
+@media screen and (min-width: 1000px) {
+  .AlbumCard svg {
+    height: 2em;
+    margin: -1em;
+  }
 }
 
 .AlbumCard .info {
@@ -22,12 +41,20 @@
 .AlbumCard .info h2 {
   font-family: "Anton", sans-serif;
   line-height: 1;
+  cursor: pointer;
 }
 
 .AlbumCard .info p.date {
   font-family: "Open Sans Condensed", sans-serif;
   font-weight: bold;
   line-height: 1;
+  font-size: 20px;
+}
+
+@media screen and (min-width: 1000px) {
+  .AlbumCard .info p.date {
+    font-size: 40px;
+  }
 }
 
 .AlbumCard .content {
@@ -50,5 +77,19 @@
   .AlbumCard .content {
     gap: 2%;
     padding: 0 2% 0 2%;
+  }
+}
+
+.AlbumCard .content p.warning {
+  color: red;
+  font-size: 1rem;
+  padding: 1em;
+  margin: 1em;
+  background-color: black;
+}
+
+@media screen and (min-width: 1000px) {
+  .AlbumCard .content p.warning {
+    font-size: 2rem;
   }
 }

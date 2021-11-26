@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", express.static(__dirname + "/public"));
 
-app.use("/api", require("./routes/api.route"));
+app.use("/api/user", require("./routes/user.route"));
+app.use("/api/photo", require("./routes/photo.route"));
+app.use("/api/album", require("./routes/album.route"));
 app.get("/api/test", (req, res) => {
   return res.json({ msg: "testing" });
 });

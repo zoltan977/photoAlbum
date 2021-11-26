@@ -34,6 +34,24 @@
   display: flex;
 }
 
+.PhotoCard div.overlay svg {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  fill: red;
+  width: auto;
+  height: 1.5em;
+  margin: -0.75em;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard div.overlay svg {
+    height: 2em;
+    margin: -1em;
+  }
+}
+
 .PhotoCard div.overlay .left,
 .PhotoCard div.overlay .right {
   width: 50%;
@@ -83,8 +101,47 @@
   }
 }
 
+.PhotoCard div.overlay div.info div.select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.PhotoCard div.overlay div.info div.select label,
+.PhotoCard div.overlay div.info div.select select {
+  text-align: center;
+  font-size: 10px;
+}
+
+@media screen and (min-width: 1000px) {
+  .PhotoCard div.overlay div.info div.select label,
+  .PhotoCard div.overlay div.info div.select select {
+    font-size: 20px;
+  }
+}
+
+.PhotoCard div.overlay div.info img.show {
+  height: 1em;
+  width: auto;
+  cursor: pointer;
+}
+
+.PhotoCard div.overlay div.info .imageCategories img {
+  height: 1em;
+  width: auto;
+  cursor: pointer;
+}
+
 .PhotoCard div.overlay div.info p.title {
   font-family: "Anton", sans-serif;
+  cursor: pointer;
 }
 
 .PhotoCard div.overlay div.info p.title,

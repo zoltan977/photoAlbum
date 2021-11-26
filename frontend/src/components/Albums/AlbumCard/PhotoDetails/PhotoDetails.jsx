@@ -3,7 +3,7 @@ import React, { useContext, useRef, useState, useEffect } from "react";
 import AlbumCardContext from "../AlbumCardContext/AlbumCardContext";
 
 export default function PhotoDetails() {
-  const { selectedPhoto, setSelectedPhoto, photos } =
+  const { selectedPhoto, setSelectedPhoto, filteredPhotos } =
     useContext(AlbumCardContext);
 
   const componentRef = useRef();
@@ -49,23 +49,29 @@ export default function PhotoDetails() {
   };
 
   const prev = (e) => {
-    const index = photos.findIndex((p) => p.path === selectedPhoto.path);
+    const index = filteredPhotos.findIndex(
+      (p) => p.path === selectedPhoto.path
+    );
     if (index >= 1) {
       animate(true, false);
-      setSelectedPhoto(photos[index - 1]);
+      setSelectedPhoto(filteredPhotos[index - 1]);
     }
   };
   const next = (e) => {
-    const index = photos.findIndex((p) => p.path === selectedPhoto.path);
-    if (index <= photos.length - 2) {
+    const index = filteredPhotos.findIndex(
+      (p) => p.path === selectedPhoto.path
+    );
+    if (index <= filteredPhotos.length - 2) {
       animate(true, true);
-      setSelectedPhoto(photos[index + 1]);
+      setSelectedPhoto(filteredPhotos[index + 1]);
     }
   };
 
   useEffect(() => {
     let nextPrev = true;
-    const index = photos.findIndex((p) => p.path === selectedPhoto.path);
+    const index = filteredPhotos.findIndex(
+      (p) => p.path === selectedPhoto.path
+    );
 
     if (index > prevIndex) nextPrev = true;
     else nextPrev = false;
@@ -73,7 +79,7 @@ export default function PhotoDetails() {
     setPrevIndex(index);
 
     if (imageClass.includes("hide")) animate(false, nextPrev);
-  }, [selectedPhoto]);
+  }, [selectedPhoto, filteredPhotos]);
 
   return (
     <div className="PhotoDetails" ref={componentRef}>

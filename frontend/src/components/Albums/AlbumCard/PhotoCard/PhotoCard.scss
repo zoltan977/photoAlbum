@@ -23,6 +23,21 @@
     height: 100%;
     display: flex;
 
+    svg {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      right: 0;
+      fill: red;
+      width: auto;
+      height: 1.5em;
+      margin: -0.75em;
+      @media screen and (min-width: 1000px) {
+        height: 2em;
+        margin: -1em;
+      }
+    }
+
     .left,
     .right {
       width: 50%;
@@ -56,8 +71,38 @@
         width: 220px;
       }
 
+      div.select {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        label,
+        select {
+          text-align: center;
+          font-size: 10px;
+          @media screen and (min-width: 1000px) {
+            font-size: 20px;
+          }
+        }
+      }
+
+      img.show {
+        height: 1em;
+        width: auto;
+        cursor: pointer;
+      }
+
+      .imageCategories {
+        img {
+          height: 1em;
+          width: auto;
+          cursor: pointer;
+        }
+      }
+
       p.title {
         font-family: "Anton", sans-serif;
+        cursor: pointer;
       }
 
       p.title,
