@@ -1,3 +1,16 @@
 .Albums {
   padding-top: 100px;
 }
+
+.Albums h1 {
+  text-align: center;
+  font-family: "Teko", sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+@media screen and (min-width: 1000px) {
+  .Albums h1 {
+    font-size: 100px;
+  }
+}

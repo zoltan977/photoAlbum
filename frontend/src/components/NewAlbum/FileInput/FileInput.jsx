@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import validateImage from "../../../utils/validateImage";
 import "./FileInput.css";
 
@@ -7,11 +7,23 @@ export default function FileInput({ change }) {
   const [error, setError] = useState("");
   const [info, setInfo] = useState(null);
 
+  const checkFileInputEmpty = () => {
+    if (!inpRef.current.files[0]) {
+      setError("Nincs kiválasztva kép!");
+      inpRef.current.parentElement.style.backgroundColor = "red";
+    } else {
+      setError("");
+      inpRef.current.parentElement.style = "";
+    }
+  };
+
   const localChange = (e) => {
+    if (!e.target?.files[0]) return;
+
     setError("");
     setInfo(null);
 
-    if (!e.target?.files[0]) return;
+    checkFileInputEmpty();
 
     let valid = true;
     for (const file of e.target.files) {
@@ -20,8 +32,14 @@ export default function FileInput({ change }) {
         break;
       }
     }
-    if (!valid) setError("Valamelyik kép mérete vagy típusa nem megfelelő!");
-    else {
+    if (!valid) {
+      setError("Valamelyik kép mérete vagy típusa nem megfelelő!");
+      inpRef.current.parentElement.style.backgroundColor = "red";
+      inpRef.current.value = "";
+      change(e);
+    } else {
+      inpRef.current.parentElement.style = "";
+
       const inf = [];
       let i = 0;
       for (const file of e.target.files) {
@@ -40,6 +58,10 @@ export default function FileInput({ change }) {
     inpRef.current.click();
   };
 
+  useEffect(() => {
+    checkFileInputEmpty();
+  }, []);
+
   return (
     <div className="FileInput">
       <button type="button" onClick={click}>
@@ -49,6 +71,7 @@ export default function FileInput({ change }) {
           ref={inpRef}
           onChange={localChange}
           multiple
+          required
         />
         Új fénykép
       </button>

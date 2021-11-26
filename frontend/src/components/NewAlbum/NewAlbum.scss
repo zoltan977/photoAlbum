@@ -1,22 +1,58 @@
 .NewAlbum {
   padding-top: 100px;
+  margin: 0 auto;
   min-height: 100vh;
-  border: 2px solid red;
+
+  font-family: "Teko", sans-serif;
+  font-size: 4vw;
+  @media screen and (min-width: 751px) {
+    font-size: 2vw;
+    width: 50%;
+  }
+
+  h1,
+  div {
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+  p {
+    text-align: center;
+
+    &.error {
+      color: red;
+      font-weight: bold;
+    }
+
+    &.info {
+      font-weight: bold;
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+  }
 
   form {
-    border: 2px solid red;
+    background-color: rgba($color: gray, $alpha: 0.8);
+    padding: 1em;
+    border-radius: 1em;
 
     margin: 0 auto;
     width: 70%;
     display: flex;
     gap: 1em;
     flex-direction: column;
-
-    font-family: "Teko", sans-serif;
-    font-size: 4vw;
-    @media screen and (min-width: 751px) {
-      font-size: 2vw;
-    }
 
     [name="title"],
     button {
@@ -25,6 +61,10 @@
       font-size: 4vw;
       @media screen and (min-width: 751px) {
         font-size: 2vw;
+      }
+
+      &:invalid {
+        background-color: red;
       }
     }
   }

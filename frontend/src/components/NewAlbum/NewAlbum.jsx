@@ -1,20 +1,33 @@
 import "./NewAlbum.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { logout } from "./../../actions/authActions";
 import FileInput from "./FileInput/FileInput";
 import httpClient from "axios";
+import { Link } from "react-router-dom";
 
 const NewAlbum = ({ logout }) => {
+  const form = useRef();
+
   const [albumData, setAlbumData] = useState({});
+  const [errors, setErrors] = useState([]);
+  const [formValid, setFormValid] = useState(false);
+  const [info, setInfo] = useState("");
 
   const formChange = (e) => {
+    setErrors([]);
+    setInfo("");
+    setFormValid(form.current.checkValidity());
+
     if (e.target.name !== "photo")
       setAlbumData({ ...albumData, [e.target.name]: e.target.value });
     else setAlbumData({ ...albumData, [e.target.name]: e.target.files });
   };
 
   const send = async (e) => {
+    setErrors([]);
+    setInfo("");
+
     const formData = new FormData();
 
     for (const field in albumData) {
@@ -25,13 +38,6 @@ const NewAlbum = ({ logout }) => {
         }
     }
 
-    console.log(albumData);
-
-    for (const [key, value] of formData) {
-      console.log("key: ", key);
-      console.log("value: ", value);
-    }
-
     try {
       const response = await httpClient.post("/api/upload_photo", formData, {
         headers: {
@@ -39,17 +45,27 @@ const NewAlbum = ({ logout }) => {
         },
       });
 
-      console.log(response);
+      if (response?.data?.success)
+        setInfo("Az új album és/vagy kép(ek) hozzáadva!");
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.errors) setErrors(error.response.data.errors);
 
-      if (error?.response?.data?.msg.includes("Authentication error")) logout();
+      if (error?.response?.data?.msg?.includes("Authentication error"))
+        logout();
     }
   };
 
   return (
     <div className="NewAlbum">
-      <form action="">
+      <h1>Új album</h1>
+      {errors.length
+        ? errors.map((e, i) => (
+            <p className="error" key={i}>
+              {e.msg}
+            </p>
+          ))
+        : null}
+      <form ref={form} action="">
         <input
           type="text"
           name="title"
@@ -58,9 +74,15 @@ const NewAlbum = ({ logout }) => {
           onChange={formChange}
         />
         <FileInput change={formChange} />
-        <button type="button" onClick={send}>
+        <button disabled={!formValid} type="button" onClick={send}>
           Send
         </button>
+        {info && (
+          <div>
+            <p className="info">{info}</p>
+            <Link to="albums">albums</Link>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -27,6 +27,7 @@ const Albums = ({ logout }) => {
 
   return (
     <div className="Albums">
+      <h1>Albumok</h1>
       <AlbumContext.Provider
         value={{
           getAlbums,

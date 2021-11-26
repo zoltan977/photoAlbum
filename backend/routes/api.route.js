@@ -3,6 +3,7 @@ const router = express.Router();
 const UserController = require("../controllers/user.controller");
 const auth = require("../middleware/auth");
 const { check, body } = require("express-validator");
+const uploadPhotoValidator = require("./validators/uploadPhotoValidator");
 
 router.post(
   "/google",
@@ -10,7 +11,11 @@ router.post(
   UserController.userAccount("google")
 );
 
-router.post("/upload_photo", [auth], UserController.userAccount("upload"));
+router.post(
+  "/upload_photo",
+  [auth, body("title").custom(uploadPhotoValidator)],
+  UserController.userAccount("upload")
+);
 
 router.post("/title_change", [auth], UserController.userAccount("titleChange"));
 
