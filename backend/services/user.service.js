@@ -7,6 +7,37 @@ const uuid = require("uuid");
 const uploadPath = settings.PROJECT_DIR + "/public/photos/";
 const fs = require("fs");
 
+exports.deleteAlbum = async (postedData, user) => {
+  const currentUser = await User.findOne({ email: user.email });
+  console.log("posted data:", postedData);
+
+  const albums = await currentUser?.albums;
+  if (!albums) throw { status: 400, msg: "Nincsenek albumok!" };
+
+  const albumIndex = await currentUser?.albums?.findIndex(
+    (a) => a.title === postedData.title
+  );
+
+  if (albumIndex === -1) throw { status: 400, msg: "Nincs ilyen album!" };
+
+  const album = currentUser.albums[albumIndex];
+
+  console.log(album);
+  try {
+    currentUser.albums.splice(albumIndex, 1);
+    await currentUser.save();
+
+    for (const photo of album.photos) {
+      fs.unlinkSync(uploadPath + photo.path);
+    }
+  } catch (error) {
+    console.log(error);
+    throw { status: 400, msg: "Fájl törlési hiba!" };
+  }
+
+  return { success: true };
+};
+
 exports.deletePhoto = async (postedData, user) => {
   const currentUser = await User.findOne({ email: user.email });
   console.log("currentUser:", currentUser);

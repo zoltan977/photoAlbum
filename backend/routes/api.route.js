@@ -21,6 +21,8 @@ router.post("/title_change", [auth], UserController.userAccount("titleChange"));
 
 router.post("/delete_photo", [auth], UserController.userAccount("deletePhoto"));
 
+router.post("/delete_album", [auth], UserController.userAccount("deleteAlbum"));
+
 router.get("/albums", [auth], UserController.userAccount("albums"));
 
 router.get("/loaduser", [auth], UserController.loadUser);
