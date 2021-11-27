@@ -1,4 +1,4 @@
-function validateImage(image) {
+export default function validateImage(image: any) {
   console.log(image);
   // check the type
   let validTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -14,5 +14,3 @@ function validateImage(image) {
 
   return true;
 }
-
-module.exports = validateImage;

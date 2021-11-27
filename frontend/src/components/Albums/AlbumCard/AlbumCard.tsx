@@ -3,26 +3,40 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import PhotoCard from "./PhotoCard/PhotoCard";
 import PhotoDetails from "./PhotoDetails/PhotoDetails";
 import AlbumCardContext from "./AlbumCardContext/AlbumCardContext";
-import AlbumContext from "../AlbumContext/AlbumContext";
+import AlbumContext, { albumContextType } from "../AlbumContext/AlbumContext";
 import { connect } from "react-redux";
-import { logout } from "../../../actions/authActions";
+import { actionType, logout } from "../../../actions/authActions";
 import ContentEditable from "../../ContentEditable/ContentEditable";
 import sendQuery from "../../../utils/modifyApiData";
+import { photoType } from "../Albums";
 
-const AlbumCard = ({ title, date, photos, logout }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [filteredPhotos, setFilteredPhotos] = useState(photos);
-  const { getAlbums, selectedCategory } = useContext(AlbumContext);
+type albumCardProps = {
+  logout: () => actionType;
+  title: string;
+  date: Date;
+  photos: photoType[];
+};
+
+const AlbumCard: React.FC<albumCardProps> = ({
+  title,
+  date,
+  photos,
+  logout,
+}) => {
+  const [selectedPhoto, setSelectedPhoto] = useState<photoType | null>(null);
+  const [filteredPhotos, setFilteredPhotos] = useState<photoType[]>(photos);
+  const { getAlbums, selectedCategory } =
+    useContext<albumContextType>(AlbumContext);
 
   const send = sendQuery(getAlbums, logout);
 
-  const deleteAlbum = (e) => {
+  const deleteAlbum = (e: React.MouseEvent) => {
     if (window.confirm("Törlöd az albumot ?"))
       send("delete", `/api/album/${title}`);
   };
 
-  const currentTimeout = useRef();
-  const titleChange = (value) => {
+  const currentTimeout = useRef<any>();
+  const titleChange = (value: string) => {
     clearTimeout(currentTimeout.current);
 
     currentTimeout.current = setTimeout(() => {
@@ -32,8 +46,8 @@ const AlbumCard = ({ title, date, photos, logout }) => {
   };
 
   useEffect(() => {
-    const filtered = photos.filter(
-      (p) => p.categories.includes(selectedCategory) || !selectedCategory
+    const filtered: photoType[] = photos.filter(
+      (p: photoType) => p.categories.includes(selectedCategory) || !selectedCategory
     );
 
     setFilteredPhotos(filtered);
@@ -62,14 +76,10 @@ const AlbumCard = ({ title, date, photos, logout }) => {
         </div>
         <div className="content">
           {filteredPhotos.length ? (
-            filteredPhotos.map((p, i) => (
+            filteredPhotos.map((p: photoType, i: number) => (
               <PhotoCard
                 key={i}
-                title={p.title}
-                date={p.date}
-                path={p.path}
-                size={p.size}
-                photoCategories={p.categories}
+                photo={p}
               />
             ))
           ) : (

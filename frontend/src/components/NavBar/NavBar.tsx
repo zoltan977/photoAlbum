@@ -5,7 +5,7 @@ import { logout } from "../../actions/authActions";
 import React from "react";
 
 //Main navigation: top bar
-const NavBar = ({ logout, user, isAuthenticated }) => {
+const NavBar = ({ logout, user, isAuthenticated }: any) => {
   const callGoogle = () => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=581910913527-bte82bsk8dpd68tdv1q3eo4af77edjsk.apps.googleusercontent.com&prompt=select_account&scope=openid%20profile%20email&redirect_uri=http%3A//localhost%3A3000/callback`;
   };
@@ -46,7 +46,7 @@ const NavBar = ({ logout, user, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
 });

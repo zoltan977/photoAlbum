@@ -1,49 +1,56 @@
 import "./PhotoCard.css";
 import React, { useContext, useRef } from "react";
-import AlbumCardContext from "../AlbumCardContext/AlbumCardContext";
-import AlbumContext from "../../AlbumContext/AlbumContext";
+import AlbumCardContext, { albumCardContextType } from "../AlbumCardContext/AlbumCardContext";
+import AlbumContext, { albumContextType } from "../../AlbumContext/AlbumContext";
 import Info from "./Info/Info";
 import { connect } from "react-redux";
-import { logout } from "./../../../../actions/authActions";
+import { actionType, logout } from "./../../../../actions/authActions";
 import sendQuery from "../../../../utils/modifyApiData";
+import { photoType } from "../../Albums";
 
-const PhotoCard = ({ title, date, path, size, photoCategories, logout }) => {
-  console.log("photoCategories", photoCategories);
+type photoCardPropsType = {
+  photo: photoType;
+  logout: () => actionType;
+};
 
-  const { setSelectedPhoto, albumTitle } = useContext(AlbumCardContext);
-  const { getAlbums, categories } = useContext(AlbumContext);
+const PhotoCard = ({
+  photo,
+  logout,
+}: photoCardPropsType) => {
+  const { setSelectedPhoto, albumTitle } = useContext<albumCardContextType>(AlbumCardContext);
+  const { getAlbums, categories } = useContext<albumContextType>(AlbumContext);
 
   const send = sendQuery(getAlbums, logout);
 
-  const currentTimeout = useRef();
-  const titleChange = (value) => {
+  const currentTimeout: any = useRef();
+  const titleChange = (newTitle: string) => {
     clearTimeout(currentTimeout.current);
 
     currentTimeout.current = setTimeout(() => {
-      send("put", "/api/photo/title", { newTitle: value, path, albumTitle });
+      send("put", "/api/photo/title", { newTitle, path: photo.path, albumTitle });
       console.log("Title change");
     }, 2000);
   };
 
-  const deletePhoto = (e) => {
+  const deletePhoto = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (window.confirm("Törlöd a képet ?"))
-      send("delete", `/api/photo/${albumTitle}/${path}`);
+      send("delete", `/api/photo/${albumTitle}/${photo.path}`);
   };
 
-  const addCategory = (e) => {
+  const addCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value)
       send("post", `/api/photo/category`, {
         albumTitle,
-        path,
+        path: photo.path,
         category: e.target.value,
       });
   };
 
-  const removeCategory = (category) => {
+  const removeCategory = (category: string) => {
     if (window.confirm("Törlöd a kategóriát ?"))
-      send("delete", `/api/photo/category/${albumTitle}/${path}/${category}`);
+      send("delete", `/api/photo/category/${albumTitle}/${photo.path}/${category}`);
   };
 
   return (
@@ -54,34 +61,26 @@ const PhotoCard = ({ title, date, path, size, photoCategories, logout }) => {
         </svg>
         <div className="left">
           <Info
+            photo={photo}
             titleChange={titleChange}
-            title={title}
-            photoCategories={photoCategories}
             addCategory={addCategory}
             removeCategory={removeCategory}
             categories={categories}
-            date={date}
-            setSelectedPhoto={(e) =>
-              setSelectedPhoto({ title, path, date, size })
-            }
+            setSelectedPhoto={setSelectedPhoto}
           />
         </div>
         <div className="right">
           <Info
+            photo={photo}
             titleChange={titleChange}
-            title={title}
-            photoCategories={photoCategories}
             addCategory={addCategory}
             removeCategory={removeCategory}
             categories={categories}
-            date={date}
-            setSelectedPhoto={(e) =>
-              setSelectedPhoto({ title, path, date, size })
-            }
+            setSelectedPhoto={setSelectedPhoto}
           />
         </div>
       </div>
-      <img src={`/photos/${path}`} alt="" />
+      <img src={`/photos/${photo.path}`} alt="" />
     </div>
   );
 };

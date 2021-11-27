@@ -1,14 +1,32 @@
 import "./Albums.css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { logout } from "./../../actions/authActions";
+import { actionType, logout } from "./../../actions/authActions";
 import AlbumCard from "./AlbumCard/AlbumCard";
 import AlbumContext from "./AlbumContext/AlbumContext";
 import getApiData from "../../utils/getApiData";
 
-const Albums = ({ logout }) => {
-  const [albums, setAlbums] = useState([]);
-  const [categories, setCategories] = useState([]);
+type albumsProps = {
+  logout: () => actionType;
+};
+
+export type photoType = {
+  title: string;
+  date: Date;
+  path: string;
+  size: number;
+  categories: string[];
+};
+
+type albumType = {
+  title: string;
+  date: Date;
+  photos: photoType[];
+};
+
+const Albums: React.FC<albumsProps> = ({ logout }) => {
+  const [albums, setAlbums] = useState<albumType[]>([]);
+  const [categories, setCategories] = useState<{ title: string }[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const getData = getApiData(logout);
@@ -35,7 +53,7 @@ const Albums = ({ logout }) => {
           <option key={0} value="">
             none
           </option>
-          {categories.map((c, i) => (
+          {categories.map((c: { title: string }, i: number) => (
             <option key={i + 1} value={c.title}>
               {c.title}
             </option>
@@ -50,7 +68,7 @@ const Albums = ({ logout }) => {
         }}
       >
         {albums.length ? (
-          albums.map((a, i) => (
+          albums.map((a: albumType, i: number) => (
             <AlbumCard
               key={i}
               title={a.title}

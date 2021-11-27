@@ -1,24 +1,31 @@
-import React from "react";
 import ContentEditable from "../../../../ContentEditable/ContentEditable";
+import { photoType } from "../../../Albums";
+
+type infoProps = {
+  photo: photoType;
+  setSelectedPhoto: React.Dispatch<React.SetStateAction<photoType | null>>;
+  titleChange: (newTitle: string) => void;
+  addCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  removeCategory: (category: string) => void;
+  categories: {title: string}[];
+}
 
 export default function Info({
+  photo,
   setSelectedPhoto,
   titleChange,
-  title,
-  photoCategories,
   addCategory,
   removeCategory,
   categories,
-  date,
-}) {
+}: infoProps) {
   return (
     <div className="info">
       <ContentEditable onChange={titleChange}>
-        <p className="title">{title}</p>
+        <p className="title">{photo.title}</p>
       </ContentEditable>
       <div className="imageCategories">
-        {photoCategories.length
-          ? photoCategories.map((c, i) => (
+        {photo.categories.length
+          ? photo.categories.map((c: any, i: any) => (
               <img
                 onClick={(e) => removeCategory(c)}
                 key={i}
@@ -41,16 +48,16 @@ export default function Info({
             none
           </option>
           {categories
-            .filter((c) => !photoCategories.includes(c.title))
-            .map((c, i) => (
+            .filter((c: any) => !photo.categories.includes(c.title))
+            .map((c: any, i: any) => (
               <option key={i + 1} value={c.title}>
                 {c.title}
               </option>
             ))}
         </select>
       </div>
-      <p className="date">{new Date(date).toLocaleString()}</p>
-      <img className="show" src="eye.svg" alt="" onClick={setSelectedPhoto} />
+      <p className="date">{new Date(photo.date).toLocaleString()}</p>
+      <img className="show" src="eye.svg" alt="" onClick={e => setSelectedPhoto(photo)} />
     </div>
   );
 }

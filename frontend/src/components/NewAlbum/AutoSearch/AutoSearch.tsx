@@ -1,10 +1,14 @@
-import React from "react";
 import "./AutoSearch.css";
 
-export default function AutoSearch({ filteredAlbumTitles, formChange }) {
+type autoSearchProps = {
+  filteredAlbumTitles: string[];
+  formChange: (e: any) => void;
+}
+
+export default function AutoSearch({ filteredAlbumTitles, formChange }: autoSearchProps) {
   return (
     <div className="AutoSearch">
-      {filteredAlbumTitles.map((f, i) => (
+      {filteredAlbumTitles.map((f: any, i: number) => (
         <p
           key={i}
           onClick={(e) => {
