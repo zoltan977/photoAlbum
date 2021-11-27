@@ -1,24 +1,25 @@
 import "./PhotoDetails.css";
-import React, { useContext, useRef, useState, useEffect } from "react";
-import AlbumCardContext from "../AlbumCardContext/AlbumCardContext";
+import { useContext, createRef, useState, useEffect } from "react";
+import AlbumCardContext, { albumCardContextType } from "../AlbumCardContext/AlbumCardContext";
+import { photoType } from "../../Albums";
 
 export default function PhotoDetails() {
   const { selectedPhoto, setSelectedPhoto, filteredPhotos } =
-    useContext(AlbumCardContext);
+    useContext<albumCardContextType>(AlbumCardContext);
 
-  const componentRef = useRef();
-  const imageDivRef = useRef();
+  const componentRef = createRef<HTMLDivElement>();
+  const imageDivRef = createRef<HTMLDivElement>();
 
   const [imageClass, setImageClass] = useState("image");
   const [prevIndex, setPrevIndex] = useState(0);
 
-  const animate = (out, nextPrev) => {
+  const animate = (out: boolean, nextPrev: boolean) => {
     if (!imageDivRef.current || !componentRef.current) return;
 
-    const imageDiv = imageDivRef.current;
-    const imageDivInfo = imageDiv.getBoundingClientRect();
-    const clonedImageDiv = imageDiv.cloneNode(true);
-    const component = componentRef.current;
+    const imageDiv: HTMLDivElement = imageDivRef.current;
+    const imageDivInfo: DOMRect = imageDiv.getBoundingClientRect();
+    const clonedImageDiv: any = imageDiv.cloneNode(true);
+    const component: HTMLDivElement = componentRef.current;
 
     if (out) setImageClass("image hide");
 
@@ -48,18 +49,22 @@ export default function PhotoDetails() {
     }, 2100);
   };
 
-  const prev = (e) => {
-    const index = filteredPhotos.findIndex(
-      (p) => p.path === selectedPhoto.path
+  const prev = (e: React.MouseEvent) => {
+    if (!selectedPhoto) return;
+
+    const index: number = filteredPhotos.findIndex(
+      (p: photoType) => p.path === selectedPhoto.path
     );
     if (index >= 1) {
       animate(true, false);
       setSelectedPhoto(filteredPhotos[index - 1]);
     }
   };
-  const next = (e) => {
+  const next = (e: React.MouseEvent) => {
+    if (!selectedPhoto) return;
+
     const index = filteredPhotos.findIndex(
-      (p) => p.path === selectedPhoto.path
+      (p: photoType) => p.path === selectedPhoto.path
     );
     if (index <= filteredPhotos.length - 2) {
       animate(true, true);
@@ -68,9 +73,11 @@ export default function PhotoDetails() {
   };
 
   useEffect(() => {
+    if (!selectedPhoto) return;
+
     let nextPrev = true;
-    const index = filteredPhotos.findIndex(
-      (p) => p.path === selectedPhoto.path
+    const index: number = filteredPhotos.findIndex(
+      (p: photoType) => p.path === selectedPhoto.path
     );
 
     if (index > prevIndex) nextPrev = true;
@@ -94,7 +101,7 @@ export default function PhotoDetails() {
         &#10094;
       </button>
       <div className={imageClass} ref={imageDivRef}>
-        <img src={`/photos/${selectedPhoto.path}`} alt="" />
+        <img src={`/photos/${selectedPhoto?.path}`} alt="" />
       </div>
       <button
         disabled={imageClass.includes("hide")}

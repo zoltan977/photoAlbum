@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 
-export default function ContentEditable(props) {
+export default function ContentEditable(props: any) {
   const { onChange } = props;
-  const element = useRef();
-  let elements = React.Children.toArray(props.children);
+  const element = useRef<HTMLElement>();
+  let elements: any[] = React.Children.toArray(props.children);
 
   const keyUpHandler = () => {
     if (!element.current) return;
@@ -12,12 +12,12 @@ export default function ContentEditable(props) {
     onChange(element.current.innerText);
   };
 
-  elements = React.cloneElement(elements[0], {
+  let ret = React.cloneElement(elements[0], {
     contentEditable: true,
     suppressContentEditableWarning: true,
     ref: element,
     onKeyUp: keyUpHandler,
   });
 
-  return elements;
+  return ret;
 }

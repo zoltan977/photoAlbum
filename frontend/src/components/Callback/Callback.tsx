@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setToken, logout } from "../../actions/authActions";
 import { connect } from "react-redux";
-import LoadingMask from "../LoadingMask/LoadingMask.component";
+import LoadingMask from "../LoadingMask/LoadingMask";
 import httpClient from "axios";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Callback = ({ setToken, logout }) => {
+const Callback = ({ setToken, logout }: any) => {
   const query = useQuery();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [waitingForServer, setWaitingForServer] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   useEffect(() => {
-    const asyncFn = async (_) => {
+    const asyncFn = async () => {
       const code = query.get("code");
 
       try {
@@ -36,8 +36,8 @@ const Callback = ({ setToken, logout }) => {
 
         setToken(res.data.token);
 
-        history.push("/");
-      } catch (error) {
+        navigate("/");
+      } catch (error: any) {
         console.log("google callback /api/google error:", error.response.data);
 
         setError(error.response.data);
@@ -62,7 +62,7 @@ const Callback = ({ setToken, logout }) => {
               {error && error.msg && <p>{error.msg}</p>}
               {error &&
                 error.errors &&
-                error.errors.map((e, i) => <p key={i}>{e.msg}</p>)}
+                error.errors.map((e: any, i: any) => <p key={i}>{e.msg}</p>)}
               {!error && <p>A belépés sikeres!</p>}
             </div>
           </div>

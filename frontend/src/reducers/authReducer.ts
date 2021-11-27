@@ -1,15 +1,31 @@
+import { actionType, userType } from "../actions/authActions";
 import { LOGOUT, LOGIN_SUCCESS } from "../actions/types";
 
 import setAuthToken from "./../utils/setAuthToken";
 
-const initialState = {
+export type authStateType = {
+  token: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  user: userType | null;
+};
+
+type authReducerType = (
+  state: authStateType,
+  action: actionType
+) => authStateType;
+
+const initialState: authStateType = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
   loading: true,
   user: null,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer: authReducerType = (
+  state: authStateType = initialState,
+  action: actionType
+) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       console.log("auth reducer login success action payload:", action.payload);

@@ -2,22 +2,26 @@ import React, { useRef, useState, useEffect } from "react";
 import validateImage from "../../../utils/validateImage";
 import "./FileInput.css";
 
-export default function FileInput({ change }) {
-  const inpRef = useRef();
+type fileInputProps = {
+  change: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function FileInput({ change }: fileInputProps) {
+  const inpRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
-  const [info, setInfo] = useState(null);
+  const [info, setInfo] = useState<any[] | null>(null);
 
   const checkFileInputEmpty = () => {
-    if (!inpRef.current.files[0]) {
+    if (inpRef.current?.files && !inpRef.current.files[0]) {
       setError("Nincs kiválasztva kép!");
-      inpRef.current.parentElement.style.border = "2px solid red";
+      inpRef.current?.parentElement && (inpRef.current.parentElement.style.border = "2px solid red");
     } else {
       setError("");
-      inpRef.current.parentElement.style = "";
+      inpRef.current?.parentElement && (inpRef.current.parentElement.style.border = "");
     }
   };
 
-  const localChange = (e) => {
+  const localChange = (e: any) => {
     if (!e.target?.files[0]) return;
 
     setError("");
@@ -34,11 +38,11 @@ export default function FileInput({ change }) {
     }
     if (!valid) {
       setError("Valamelyik kép mérete vagy típusa nem megfelelő!");
-      inpRef.current.parentElement.style.border = "2px solid red";
-      inpRef.current.value = "";
+      inpRef.current?.parentElement && (inpRef.current.parentElement.style.border = "2px solid red");
+      inpRef.current && (inpRef.current.value = "");
       change(e);
     } else {
-      inpRef.current.parentElement.style = "";
+      inpRef.current?.parentElement && (inpRef.current.parentElement.style.border = "");
 
       const inf = [];
       let i = 0;
@@ -55,7 +59,7 @@ export default function FileInput({ change }) {
   };
 
   const click = () => {
-    inpRef.current.click();
+    inpRef.current && inpRef.current.click();
   };
 
   useEffect(() => {
